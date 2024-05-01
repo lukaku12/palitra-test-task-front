@@ -1,12 +1,13 @@
 <template>
-  <div class="flex flex-col rounded-xl gap-y-2 overflow-hidden text-center border pb-2 w-full h-full max-w-[300px]">
+  <BaseCard
+      class="flex flex-col rounded-xl gap-y-2 overflow-hidden text-center border pb-6 w-full h-full max-w-[300px]">
 
-    <ImageWithLoader :image="product.image" alt="product.name"/>
+    <ImageWithLoader class="rounded" :image="product.image" alt="product.name"/>
 
     <h2>{{ product?.name }}</h2>
 
     <div class="flex justify-center gap-x-1">
-      <p class="price">{{ product?.price }} ლარი</p>
+      <p class="price">{{ product?.price }} ₾</p>
     </div>
 
     <BaseButton
@@ -16,12 +17,13 @@
       დაამატე კალათაში
     </BaseButton>
 
-  </div>
+  </BaseCard>
 </template>
 
 <script setup>
 import ImageWithLoader from "@/components/ImageWithLoader.vue";
 import BaseButton from "@/components/layout/BaseButton.vue";
+import BaseCard from "@/components/layout/BaseCard.vue";
 
 defineProps({
   product: {

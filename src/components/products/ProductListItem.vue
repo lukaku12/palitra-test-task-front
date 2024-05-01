@@ -6,7 +6,7 @@
         :to="{name: 'products.show',  params: {id: product.id}}">
     </router-link>
     <BaseCard
-        class="flex flex-col rounded-xl gap-y-2 overflow-hidden text-center border pb-6">
+        class="flex flex-col rounded-xl gap-y-2 overflow-hidden justify-between text-center border pb-6 h-full">
       <ImageWithLoader class="rounded" :image="product.image" alt="product.name"/>
 
       <h2>{{ product.name }}</h2>

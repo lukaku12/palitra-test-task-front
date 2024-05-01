@@ -6,7 +6,7 @@
           class="flex flex-col gap-x-4 md:flex-row"
       >
         <div>
-          <ImageWithLoader class="rounded" :image="product.image" alt="product.name"/>
+          <ImageWithLoader :width="500" :height="375" class="rounded" :image="product.image" alt="product.name"/>
         </div>
 
         <div class="flex flex-col justify-between md:max-w-[250px]">

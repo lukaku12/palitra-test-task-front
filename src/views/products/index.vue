@@ -61,5 +61,6 @@ onMounted(() => store.fetchProducts());
   max-width: 1100px;
   place-items: center;
   margin-top: 3rem;
+  grid-auto-rows: 1fr;
 }
 </style>

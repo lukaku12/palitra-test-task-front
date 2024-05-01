@@ -19,7 +19,7 @@
           </div>
 
           <div class="flex gap-x-2 pt-4 ">
-            <BaseButton @click="store.addProductToCart(product)">კალათში დამატება</BaseButton>
+            <BaseButton @click="cartStore.addProductToCart(product)">კალათში დამატება</BaseButton>
             <BaseButton @click="buyProduct">პროდუქტის ყიდვა</BaseButton>
           </div>
         </div>
@@ -46,21 +46,23 @@
 import Layout from "@/components/layout/Layout.vue";
 import BaseCard from "@/components/layout/BaseCard.vue";
 import {computed, onMounted} from "vue";
-import useProductsStore from "@/store/modules/products.js";
 import {useRoute, useRouter} from "vue-router";
 import useRequestState from "@/composables/useRequestState.js";
 import BaseButton from "@/components/layout/BaseButton.vue";
 import ImageWithLoader from "@/components/ImageWithLoader.vue";
+import useCartStore from "@/store/modules/cart.js";
+import useProductsStore from "@/store/modules/products.js";
 
 const router = useRouter();
 const route = useRoute();
-const store = useProductsStore();
+const cartStore = useCartStore();
+const productsStore = useProductsStore();
 
-const product = computed(() => store.product);
-const isFetched = computed(() => store.isFetched);
+const product = computed(() => productsStore.product);
+const isFetched = computed(() => productsStore.isFetched);
 
 const buyProduct = () => {
-  store.addProductToCart(product.value);
+  cartStore.addProductToCart(product.value);
   router.push({name: 'checkout'});
 };
 
@@ -70,6 +72,6 @@ const {
   dataIsEmptyAfterFetch,
 } = useRequestState();
 
-onMounted(() => store.fetchProductById(route.params.id));
+onMounted(() => productsStore.fetchProductById(route.params.id));
 
 </script>

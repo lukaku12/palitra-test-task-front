@@ -6,7 +6,7 @@
             v-for="product in products.data"
             :key="product.id"
             :product="product"
-            @add-to-cart="store.addProductToCart"
+            @add-to-cart="cartStore.addProductToCart"
         />
       </template>
 
@@ -34,13 +34,15 @@ import useProductsStore from "@/store/modules/products.js";
 import usePagination from "@/composables/hooks/usePagination.js";
 import useRef from "@/composables/hooks/useRef.js";
 import useRequestState from "@/composables/useRequestState.js";
+import useCartStore from "@/store/modules/cart.js";
 
-const store = useProductsStore();
+const productsStore = useProductsStore();
+const cartStore = useCartStore();
 
 const [currentPage, setCurrentPage] = useRef(1);
 
-const products = computed(() => usePagination(store.products, currentPage.value, 9));
-const isFetched = computed(() => store.isFetched);
+const products = computed(() => usePagination(productsStore.products, currentPage.value, 9));
+const isFetched = computed(() => productsStore.isFetched);
 
 const {
   dataIsNotEmptyAfterFetch,
@@ -48,7 +50,7 @@ const {
   dataIsEmptyAfterFetch,
 } = useRequestState();
 
-onMounted(() => store.fetchProducts());
+onMounted(() => productsStore.fetchProducts());
 
 
 </script>

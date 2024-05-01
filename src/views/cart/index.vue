@@ -10,7 +10,7 @@
           <h1 class="text-2xl">კალათა</h1>
         </header>
 
-        <div class="max-h-[500px] overflow-y-auto flex flex-col gap-y-2 px-4">
+        <div class="max-h-[500px] h-auto overflow-y-auto grid gap-y-2 px-4">
 
           <div
               v-for="item in cartItems"
@@ -27,7 +27,7 @@
                   <div class="flex gap-x-1">
                     <BaseButton
                         v-if="item.quantity > 1"
-                        @click="productsStore.removeProductFromCart(item)"
+                        @click="cartStore.removeProductFromCart(item)"
                         is-icon
                         class="!px-1.6 !py-0"
                     >
@@ -36,12 +36,12 @@
                     <BaseButton
                         v-if="item.quantity === 1"
                         class="!px-1 !py-0 bg-transparent hover:bg-secondary-200 border"
-                        @click="productsStore.removeProductFromCart(item)"
+                        @click="cartStore.removeProductFromCart(item)"
                     >
-                      delete
+                      წაშლა
                     </BaseButton>
                     <BaseButton
-                        @click="productsStore.addProductToCart(item)"
+                        @click="cartStore.addProductToCart(item)"
                         is-icon
                         class="!px-2 !py-0"
                     >
@@ -65,7 +65,7 @@
         </div>
         <div class="!px-4 w-full flex flex-col gap-y-2 border-t pt-4">
           <div class="flex m-auto gap-x-2">
-            <BaseButton @click="productsStore.clearCart" class="bg-red-700 hover:bg-red-800 mx-0">
+            <BaseButton @click="cartStore.clearCart" class="bg-red-700 hover:bg-red-800 mx-0">
               კალათის გასუფთავება
             </BaseButton>
             <router-link :to="{name: 'checkout'}">
@@ -92,19 +92,18 @@
 </template>
 
 <script setup>
-import useProductsStore from "@/store/modules/products.js";
 import {computed} from "vue";
 import BaseButton from "@/components/layout/BaseButton.vue";
 import BaseCard from "@/components/layout/BaseCard.vue";
 import Layout from "@/components/layout/Layout.vue";
 import IconChevronLeft from "@/components/icons/IconChevronLeft.vue";
 import router from "@/router/index.js";
+import useCartStore from "@/store/modules/cart.js";
 
-const productsStore = useProductsStore();
+const cartStore = useCartStore();
 
-const cartItems = computed(() => productsStore.getCart().items);
-const cartTotalPrice = computed(() => productsStore.getCart().totalPrice);
-const cartIsNotEmpty = computed(() => productsStore.getCart().totalItems > 0);
+const cartItems = computed(() => cartStore.getCart().items);
+const cartIsNotEmpty = computed(() => cartStore.getCart().totalItems > 0);
 
 
 </script>

@@ -12,7 +12,7 @@
             <h1 class="text-2xl">შეკვეთა</h1>
           </header>
 
-          <div class="max-h-[500px] overflow-y-auto flex flex-col gap-y-2 px-4">
+          <div class="max-h-[500px] overflow-y-auto grid gap-y-2 px-4">
 
             <div
                 v-for="item in cartItems"
@@ -85,7 +85,6 @@
 </template>
 
 <script setup>
-import useProductsStore from "@/store/modules/products.js";
 import {computed} from "vue";
 import BaseButton from "@/components/layout/BaseButton.vue";
 import BaseCard from "@/components/layout/BaseCard.vue";
@@ -93,19 +92,20 @@ import Layout from "@/components/layout/Layout.vue";
 import IconChevronLeft from "@/components/icons/IconChevronLeft.vue";
 import router from "@/router/index.js";
 import useRef from "@/composables/hooks/useRef.js";
+import useCartStore from "@/store/modules/cart.js";
 
 const [orderIsSubmitted, setOrderIsSubmitted] = useRef(false);
 
-const productsStore = useProductsStore();
+const cartStore = useCartStore();
 
 const submitOrder = () => {
   setOrderIsSubmitted(true);
-  productsStore.clearCart();
+  cartStore.clearCart();
 };
 
-const cartItems = computed(() => productsStore.getCart().items);
-const cartTotalPrice = computed(() => productsStore.getCart().totalPrice);
-const cartIsNotEmpty = computed(() => productsStore.getCart().totalItems > 0);
+const cartItems = computed(() => cartStore.getCart().items);
+const cartTotalPrice = computed(() => cartStore.getCart().totalPrice);
+const cartIsNotEmpty = computed(() => cartStore.getCart().totalItems > 0);
 
 
 </script>

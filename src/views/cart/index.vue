@@ -15,17 +15,46 @@
           <div
               v-for="item in cartItems"
               :key="item.id"
-              class="flex items-center justify-between "
+              class="flex items-center justify-between w-full overflow-hidden"
           >
-            <div class="flex items-center gap-x-2">
+            <div class="flex items-center gap-x-2 max-w-1/2 w-full">
               <img :src="item.image" alt="product" class="w-[50px] h-[50px] object-cover"/>
               <div class="flex flex-col items-start">
                 <p :title="item.name" class="text-sm">{{ item.name }}</p>
-                <p> {{ item.quantity }}x</p>
+                <div class="flex gap-x-2 w-full">
+                  <p> {{ item.quantity }}x</p>
+
+                  <div class="flex gap-x-1">
+                    <BaseButton
+                        v-if="item.quantity > 1"
+                        @click="productsStore.removeProductFromCart(item)"
+                        is-icon
+                        class="!px-1.6 !py-0"
+                    >
+                      -
+                    </BaseButton>
+                    <BaseButton
+                        v-if="item.quantity === 1"
+                        class="!px-1 !py-0 bg-transparent hover:bg-secondary-200 border"
+                        @click="productsStore.removeProductFromCart(item)"
+                    >
+                      delete
+                    </BaseButton>
+                    <BaseButton
+                        @click="productsStore.addProductToCart(item)"
+                        is-icon
+                        class="!px-2 !py-0"
+                    >
+                      +
+                    </BaseButton>
+                  </div>
+
+
+                </div>
               </div>
 
             </div>
-            <div>
+            <div class="flex flex-col w-[100px] text-end">
               <p>{{ item.price }} ₾</p>
               <p class="text-[10px] text-gray-300 ">
                 {{ item.totalPrice }} ₾

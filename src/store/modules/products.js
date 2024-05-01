@@ -11,7 +11,6 @@ const useProductsStore = defineStore('products', () => {
     const [product, setProduct] = useRef([]);
     const [cart, setCart] = useRef(lStorage.getValue());
 
-
     const fetchProducts = () => {
         setIsFetched(false);
         axios
@@ -49,6 +48,7 @@ const useProductsStore = defineStore('products', () => {
 
     const removeProductFromCart = (product) => {
         const index = cart.value.findIndex((item) => item.id === product.id);
+
         if (index !== -1) {
             const newCart = [...cart.value];
             newCart.splice(index, 1);
@@ -63,18 +63,20 @@ const useProductsStore = defineStore('products', () => {
     }
 
     const getCart = () => {
-        const items = cart.value.reduce((acc, product) => {
+        const items =
+            cart.value
+                .reduce((acc, product) => {
+                    const index = acc.findIndex((item) => item.id === product.id);
 
-            const index = acc.findIndex((item) => item.id === product.id);
-
-            if (index !== -1) {
-                acc[index].quantity += 1;
-                acc[index].totalPrice += product.price;
-            } else {
-                acc.push({...product, quantity: 1, totalPrice: product.price});
-            }
-            return acc;
-        }, []);
+                    if (index !== -1) {
+                        acc[index].quantity += 1;
+                        acc[index].totalPrice += product.price;
+                    } else {
+                        acc.push({...product, quantity: 1, totalPrice: product.price});
+                    }
+                    return acc;
+                }, [])
+                .sort((a, b) => a.id - b.id);
 
         const totalPrice = cart.value.reduce((acc, product) => acc + product.price, 0);
 
@@ -84,7 +86,6 @@ const useProductsStore = defineStore('products', () => {
             totalItems: cart.value.length,
         };
     }
-
 
     return {
         cart,

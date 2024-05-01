@@ -15,8 +15,9 @@
     </div>
 
     <Pagination
+        v-if="products.totalPages"
         :current-page="currentPage"
-        :total-pages="products?.totalPages"
+        :total-pages="products.totalPages"
         route-name="products.index"
         @set-current-page="setCurrentPage"
     />

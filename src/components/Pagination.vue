@@ -1,16 +1,11 @@
 <template>
-  <div class="py-10 w-full">
-    <div class="flex gap-x-1 w-full max-w-[365px] overflow-hidden mx-auto">
+  <div class="py-10 w-full flex justify-center">
+    <div class="flex gap-x-1">
       <template v-for="page in totalPages" :key="page">
-
         <BaseButton
             ref="btnRef"
-            :class="
-              currentPage === +page ?
-              'bg-primary-100 hover:bg-primary-200 border-2 border-secondary-200' :
-              'bg-secondary-200 hover:bg-secondary-300'
-            "
-            class="font-bold transition"
+            :class="currentPage === +page ? 'text-primary-200' : 'hover:text-primary-100' "
+            class="font-bold !px-0 !py-0 bg-transparent hover:bg-transparent text-black"
             @click="setCurrentPage(page)"
         >
           {{ page }}
@@ -23,7 +18,7 @@
 
 <script setup>
 import {useRoute, useRouter} from "vue-router";
-import {onMounted, ref} from "vue";
+import {onMounted, watch} from "vue";
 import BaseButton from "@/components/layout/BaseButton.vue";
 
 const router = useRouter();
@@ -46,17 +41,27 @@ const {routeName, totalPages, currentPage} = defineProps({
 
 const emits = defineEmits(['set-current-page']);
 
-const btnRef = ref(null);
+
+const validatePage = (page) => {
+  if (isNaN(page)) return 1;
+  if (typeof page !== 'number') return 1;
+  if (page < 1 || page > totalPages) return 1;
+  return page;
+}
 
 const setCurrentPage = (page) => {
-  emits('set-current-page', page);
+  const validatedPage = validatePage(page)
+
+  emits('set-current-page', validatedPage);
   router.push({
     name: routeName,
-    query: {page},
+    query: {page: validatedPage},
   });
 };
 
 onMounted(() => setCurrentPage(+route.query.page || 1));
+watch(route, () => setCurrentPage(+route.query.page || 1));
+
 
 </script>
 

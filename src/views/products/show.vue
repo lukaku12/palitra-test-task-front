@@ -15,8 +15,7 @@
           <div class="h-full flex flex-col justify-between">
             <h1 class="font-bold text-2xl">{{ product.name }}</h1>
             <p class="text-end font-bold text-xl">{{ product.price }} ₾</p>
-            <div class="h-full flex items-center"><p class="mt-5">{{ description }}</p></div>
-
+            <div class="h-full flex items-center"><p class="mt-5">{{ product.description }}</p></div>
           </div>
 
           <div class="flex gap-x-2 pt-4 ">
@@ -72,9 +71,5 @@ const {
 } = useRequestState();
 
 onMounted(() => store.fetchProductById(route.params.id));
-
-const description = computed(() => {
-  return product?.value?.description || 'ეს პროდუქტი საოცარია, მხოლოდ დღეს შეიძინეთ 2 ცალი და მიიღეთ ნატახტარის ლიმონათი საჩუქრად!';
-});
 
 </script>

@@ -8,6 +8,7 @@ const useProductsStore = defineStore('products', () => {
 
     const [isFetched, setIsFetched] = useRef(false);
     const [products, setProducts] = useRef([]);
+    const [product, setProduct] = useRef([]);
     const [cart, setCart] = useRef(lStorage.getValue());
 
 
@@ -25,6 +26,21 @@ const useProductsStore = defineStore('products', () => {
                 setIsFetched(true);
             });
     };
+
+    const fetchProductById = (id) => {
+        setIsFetched(false);
+        axios
+            .get(`products/${id}`)
+            .then((res) => {
+                setProduct(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => {
+                setIsFetched(true);
+            });
+    }
 
     const addProductToCart = (product) => {
         setCart([...cart.value, product]);
@@ -69,12 +85,15 @@ const useProductsStore = defineStore('products', () => {
         };
     }
 
+
     return {
         cart,
+        product,
         products,
         isFetched,
         getCart,
         fetchProducts,
+        fetchProductById,
         addProductToCart,
         removeProductFromCart,
         clearCart,

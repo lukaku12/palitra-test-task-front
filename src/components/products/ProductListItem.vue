@@ -1,23 +1,29 @@
 <template>
-  <BaseCard
-      class="flex flex-col rounded-xl gap-y-2 overflow-hidden text-center border pb-6 w-full h-full max-w-[300px]">
+  <section class="w-full h-full max-w-[300px] relative">
+    <router-link
+        :key="product.id"
+        class="z-10 absolute w-full h-full inset-0"
+        :to="{name: 'products.show',  params: {id: product.id}}">
+    </router-link>
+    <BaseCard
+        class="flex flex-col rounded-xl gap-y-2 overflow-hidden text-center border pb-6">
+      <ImageWithLoader class="rounded" :image="product.image" alt="product.name"/>
 
-    <ImageWithLoader class="rounded" :image="product.image" alt="product.name"/>
+      <h2>{{ product.name }}</h2>
 
-    <h2>{{ product?.name }}</h2>
+      <div class="flex justify-center gap-x-1">
+        <p class="price">{{ product.price }} ₾</p>
+      </div>
 
-    <div class="flex justify-center gap-x-1">
-      <p class="price">{{ product?.price }} ₾</p>
-    </div>
+      <BaseButton
+          @click="$emit('add-to-cart', product)"
+          class="z-30 flex w-auto bg-primary-100 hover:bg-primary-200 rounded-xl mx-auto px-2 py-1 text-white"
+      >
+        დაამატე კალათაში
+      </BaseButton>
 
-    <BaseButton
-        @click="$emit('add-to-cart', product)"
-        class="flex w-auto bg-primary-100 hover:bg-primary-200 rounded-xl mx-auto px-2 py-1 text-white"
-    >
-      დაამატე კალათაში
-    </BaseButton>
-
-  </BaseCard>
+    </BaseCard>
+  </section>
 </template>
 
 <script setup>

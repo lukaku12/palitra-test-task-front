@@ -17,7 +17,7 @@
     <Pagination
         :current-page="currentPage"
         :total-pages="products?.totalPages"
-        route-name="products"
+        route-name="products.index"
         @set-current-page="setCurrentPage"
     />
 

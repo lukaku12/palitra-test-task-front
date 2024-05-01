@@ -1,11 +1,14 @@
 <template>
-  <header class="w-full h-full">
-    <div class="h-[80px]"></div>
-    <div class="flex text-white bg-secondary-400 text-2xl h-[80px] top-0 px-2 md:px-20 fixed w-full z-50 justify-between items-center">
-      <h1>ჩემი მაღაზია</h1>
-      <Cart/>
-    </div>
-  </header>
+  <router-link :to="{name: 'products.index'}" class="text-white">
+    <header class="w-full h-full">
+      <div class="h-[80px]"></div>
+      <div
+          class="flex text-white bg-secondary-400 text-2xl h-[80px] top-0 px-2 md:px-20 fixed w-full z-50 justify-between items-center">
+        <h1>ჩემი მაღაზია</h1>
+        <Cart/>
+      </div>
+    </header>
+  </router-link>
 </template>
 
 <script setup>

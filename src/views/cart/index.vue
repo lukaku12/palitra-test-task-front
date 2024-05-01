@@ -4,11 +4,9 @@
     <div v-if="cartIsNotEmpty" class="max-w-[500px] w-full">
       <BaseCard class="flex flex-col gap-y-2 !px-0">
         <header class="relative border-b pb-3 mb-2  px-4">
-          <router-link :to="{name: 'products'}">
-            <BaseButton is-icon class="absolute left-2 -top-1">
-              <IconChevronLeft class="w-[20px] h-[20px]" fill="white"/>
-            </BaseButton>
-          </router-link>
+          <BaseButton @click="router.back()" is-icon class="absolute left-2 -top-1">
+            <IconChevronLeft class="w-[20px] h-[20px]" fill="white"/>
+          </BaseButton>
           <h1 class="text-2xl">კალათა</h1>
         </header>
 
@@ -60,7 +58,7 @@
 
     <BaseCard v-if="!cartIsNotEmpty">
       <h1>კალათა ცარიელია!</h1>
-      <router-link :to="{name: 'products'}">
+      <router-link :to="{name: 'products.index'}">
         <BaseButton>
           დაამატე პროდუქტები
         </BaseButton>
@@ -77,6 +75,7 @@ import BaseButton from "@/components/layout/BaseButton.vue";
 import BaseCard from "@/components/layout/BaseCard.vue";
 import Layout from "@/components/layout/Layout.vue";
 import IconChevronLeft from "@/components/icons/IconChevronLeft.vue";
+import router from "@/router/index.js";
 
 const productsStore = useProductsStore();
 

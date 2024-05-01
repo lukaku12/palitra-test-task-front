@@ -6,13 +6,18 @@ const router = new createRouter({
     routes: [
         {
             path: "/",
-            redirect: {name: "products"},
+            redirect: {name: "products.index"},
             name: "home"
         },
         {
             path: "/products",
             component: () => import("@/views/products/index.vue"),
-            name: "products",
+            name: "products.index",
+        },
+        {
+            path: "/products/:id",
+            component: () => import("@/views/products/show.vue"),
+            name: "products.show",
         },
         {
             path: "/cart",

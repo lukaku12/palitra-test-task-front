@@ -1,10 +1,8 @@
 <template>
-  <div>
-    <BaseHeader/>
-    <router-view v-slot="slotProps">
-      <component :is="slotProps.Component"></component>
-    </router-view>
-  </div>
+  <BaseHeader/>
+  <router-view v-slot="slotProps">
+    <component :is="slotProps.Component"></component>
+  </router-view>
 </template>
 
 <script setup>

@@ -1,34 +1,35 @@
 <template>
-  <div class="pagination">
-    <!--    <button class="prev" :disabled="currentPage === 2">-->
-    <!--      <router-link :to="{name: routeName, query: {page: currentPage - 1}}">&laquo; Prev</router-link>-->
-    <!--    </button>-->
-    <div class="container">
+  <div class="py-10 w-full">
+    <div class="flex gap-x-1 w-full max-w-[365px] overflow-hidden mx-auto">
       <template v-for="page in totalPages" :key="page">
 
-        <button
-            :class="{active: currentPage === page}"
-            class="page-number"
+        <BaseButton
+            ref="btnRef"
+            :class="
+              currentPage === +page ?
+              'bg-primary-100 hover:bg-primary-200 border-2 border-secondary-200' :
+              'bg-secondary-200 hover:bg-secondary-300'
+            "
+            class="font-bold transition"
             @click="setCurrentPage(page)"
         >
           {{ page }}
-        </button>
+        </BaseButton>
 
       </template>
     </div>
-    <!--    <button class="next" :disabled="currentPage === totalPages - 1">-->
-    <!--      <router-link :to="{name: routeName, query: {page: currentPage + 1}}">Next &raquo;</router-link>-->
-    <!--    </button>-->
   </div>
 </template>
 
 <script setup>
-import {useRouter} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import {onMounted, ref} from "vue";
+import BaseButton from "@/components/layout/BaseButton.vue";
 
-const router = useRouter()
+const router = useRouter();
+const route = useRoute();
 
-const {routeName} = defineProps({
+const {routeName, totalPages, currentPage} = defineProps({
   totalPages: {
     type: Number,
     required: true,
@@ -45,65 +46,17 @@ const {routeName} = defineProps({
 
 const emits = defineEmits(['set-current-page']);
 
+const btnRef = ref(null);
 
 const setCurrentPage = (page) => {
   emits('set-current-page', page);
   router.push({
     name: routeName,
-    query: {page}
+    query: {page},
   });
 };
 
-onMounted(() => {
-  if (router.currentRoute.value.query.page) {
-    setCurrentPage(Number(router.currentRoute.value.query.page));
-  }
-
-});
+onMounted(() => setCurrentPage(+route.query.page || 1));
 
 </script>
 
-<style scoped>
-.pagination {
-  width: 100%;
-  display: flex;
-
-  justify-content: center;
-}
-
-.container {
-  width: 100%;
-  display: flex;
-  max-width: 430px;
-  height: 40px;
-  overflow: hidden;
-}
-
-.pagination button {
-  color: #fff;
-  text-decoration: none;
-  padding: 5px 15px;
-  margin: 0 5px;
-  border-radius: 5px;
-  background-color: #555;
-}
-
-.pagination button:hover {
-  background-color: #777;
-}
-
-.pagination .dots {
-  color: #fff;
-}
-
-.pagination .prev,
-.pagination .next {
-  background-color: #007bff;
-}
-
-.pagination .prev:hover,
-.pagination .next:hover {
-  background-color: #0056b3;
-}
-
-</style>

@@ -1,19 +1,28 @@
 <template>
-  <div class="shop-item">
-    <img :src="product?.image" alt="Product Image">
+  <div class="flex flex-col rounded-xl gap-y-2 overflow-hidden text-center border pb-2 w-full h-full max-w-[300px]">
+
+    <ImageWithLoader :image="product.image" alt="product.name"/>
+
     <h2>{{ product?.name }}</h2>
-    <div class="price-container">
-      <p class="price">{{ product?.price }} </p>
-      <p>ლარი</p>
+
+    <div class="flex justify-center gap-x-1">
+      <p class="price">{{ product?.price }} ლარი</p>
     </div>
-    <button @click="$emit('add-to-cart', product)" class="add-to-cart-btn">
+
+    <BaseButton
+        @click="$emit('add-to-cart', product)"
+        class="flex w-auto bg-primary-100 hover:bg-primary-200 rounded-xl mx-auto px-2 py-1 text-white"
+    >
       დაამატე კალათაში
-<!--      {{ product.id }}-->
-    </button>
+    </BaseButton>
+
   </div>
 </template>
 
 <script setup>
+import ImageWithLoader from "@/components/ImageWithLoader.vue";
+import BaseButton from "@/components/layout/BaseButton.vue";
+
 defineProps({
   product: {
     type: Object,
@@ -24,55 +33,3 @@ defineProps({
 defineEmits(['add-to-cart']);
 
 </script>
-
-<style scoped>
-.shop-item {
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  text-align: center;
-  padding-bottom: 20px;
-  max-height: 400px;
-  max-width: 300px;
-}
-
-.shop-item img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 5px;
-}
-
-.shop-item h2 {
-  margin-top: 10px;
-  font-size: 18px;
-}
-
-.price-container{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  column-gap: 5px;
-}
-
-.shop-item p.price {
-  margin: 10px 0;
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.shop-item button.add-to-cart-btn {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 8px 20px;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.shop-item button.add-to-cart-btn:hover {
-  background-color: #0056b3;
-}
-
-</style>

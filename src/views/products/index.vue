@@ -1,6 +1,6 @@
 <template>
-  <main>
-    <div class="container shop-items">
+  <Layout class="!justify-start">
+    <div class="my-grid">
       <template v-if="dataIsNotEmptyAfterFetch(isFetched, products.data)">
         <ProductListItem
             v-for="product in products.data"
@@ -21,10 +21,11 @@
         @set-current-page="setCurrentPage"
     />
 
-  </main>
+  </Layout>
 </template>
 
 <script setup>
+import Layout from "@/components/layout/Layout.vue";
 import ProductListItem from "@/components/products/ProductListItem.vue";
 import Pagination from "@/components/Pagination.vue";
 import {computed, onMounted} from "vue";
@@ -52,21 +53,13 @@ onMounted(() => store.fetchProducts());
 </script>
 
 <style scoped>
-main {
-  padding: 20px 0;
-}
-
-.container {
-  width: 90%;
-  margin: 0 auto 40px;
-}
-
-.shop-items {
+.my-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+  width: 100%;
+  max-width: 1100px;
   place-items: center;
-  grid-auto-rows: minmax(100px, auto);
+  margin-top: 3rem;
 }
-
 </style>

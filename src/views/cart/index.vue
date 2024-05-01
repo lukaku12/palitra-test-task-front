@@ -63,20 +63,14 @@
           </div>
 
         </div>
-        <div class="!px-4 w-full flex flex-col gap-y-2">
-
-          <div class="flex justify-between border-t pt-1 mt-2">
-            <p>ჯამი:</p>
-            <p>{{ cartTotalPrice }} ₾</p>
-          </div>
-
-          <div class="flex ml-auto gap-x-1">
+        <div class="!px-4 w-full flex flex-col gap-y-2 border-t pt-4">
+          <div class="flex m-auto gap-x-2">
             <BaseButton @click="productsStore.clearCart" class="bg-red-700 hover:bg-red-800 mx-0">
-              გასუფთავება
+              კალათის გასუფთავება
             </BaseButton>
             <router-link :to="{name: 'checkout'}">
               <BaseButton class="bg-green-700 hover:bg-green-800 ">
-                შეკვეთა
+                შეკვეთზე გადასვლა
               </BaseButton>
             </router-link>
           </div>

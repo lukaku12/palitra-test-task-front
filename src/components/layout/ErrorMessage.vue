@@ -1,5 +1,5 @@
 <template>
-  <BaseCard class="w-full z-50 bg-red-800 absolute top-[80px]">
+  <BaseCard class="w-full z-50 !bg-red-800 absolute top-[80px]">
     <p class="px-12">
       <slot/>
     </p>

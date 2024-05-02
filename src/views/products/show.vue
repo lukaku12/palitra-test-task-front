@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <ErrorMessage v-if="error" @click="setError(null)">{{ error }}</ErrorMessage>
+    <ErrorMessage v-if="error" @close="setError(null)">{{ error }}</ErrorMessage>
     <BaseCard v-if="dataIsNotEmptyAfterFetch(isFetched, product)">
       <div class="flex flex-col gap-x-4 md:flex-row">
         <div>

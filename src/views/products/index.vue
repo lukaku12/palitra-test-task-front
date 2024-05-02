@@ -2,7 +2,7 @@
   <Layout
       :class="dataIsNotEmptyAfterFetch(isFetched, paginatedProducts.data) ? '!justify-start' : ''"
   >
-    <ErrorMessage v-if="error" @click="setError(null)">{{ error }}</ErrorMessage>
+    <ErrorMessage v-if="error" @close="setError(null)">{{ error }}</ErrorMessage>
 
     <div class="my-grid">
       <template v-if="dataIsNotEmptyAfterFetch(isFetched, paginatedProducts.data)">

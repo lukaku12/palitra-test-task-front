@@ -28,6 +28,11 @@ const router = new createRouter({
             component: () => import("@/views/checkout/index.vue"),
             name: "checkout",
         },
+        {
+            path: "/:pathMatch(.*)*",
+            component: () => import("@/views/errors/404.vue"),
+            name: "404",
+        },
     ]
 });
 

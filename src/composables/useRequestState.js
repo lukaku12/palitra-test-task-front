@@ -1,9 +1,27 @@
 const useRequestState = () => {
 
-    const dataIsNotEmptyAfterFetch = (isFetched, data) => Array.isArray(data) ? isFetched && data.length > 0 : isFetched && data;
-    const dataIsEmptyAfterFetch = (isFetched, data) => Array.isArray(data) ? isFetched && data.length === 0 : isFetched && !data;
+    const dataIsNotEmptyAfterFetch = (isFetched, data) => {
+        if (Array.isArray(data)) {
+            return isFetched && data.length > 0;
+        } else {
+            return !!(isFetched && Object.keys(data).length > 0);
+        }
+    }
+    const dataIsEmptyAfterFetch = (isFetched, data) => {
+        if (Array.isArray(data)) {
+            return isFetched && data.length === 0;
+        } else {
+            return isFetched && Object.keys(data).length === 0;
+        }
+    }
 
-    const dataIsEmptyBeforeFetch = (isFetched, data) => Array.isArray(data) ? !isFetched && data.length === 0 : !isFetched && !data;
+    const dataIsEmptyBeforeFetch = (isFetched, data) => {
+        if (Array.isArray(data)) {
+            return !isFetched && data.length === 0;
+        } else {
+            return !isFetched && Object.keys(data).length === 0;
+        }
+    }
 
     return {
         dataIsNotEmptyAfterFetch,

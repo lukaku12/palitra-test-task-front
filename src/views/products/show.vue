@@ -1,10 +1,8 @@
 <template>
   <Layout>
-    <BaseCard>
-      <div
-          v-if="dataIsNotEmptyAfterFetch(isFetched, product)"
-          class="flex flex-col gap-x-4 md:flex-row"
-      >
+    <ErrorMessage v-if="error" @click="setError(null)">{{ error }}</ErrorMessage>
+    <BaseCard v-if="dataIsNotEmptyAfterFetch(isFetched, product)">
+      <div class="flex flex-col gap-x-4 md:flex-row">
         <div>
           <ImageWithLoader :width="500" :height="375" class="rounded" :image="product.image" alt="product.name"/>
         </div>
@@ -25,17 +23,16 @@
         </div>
 
       </div>
+    </BaseCard>
 
-      <div class="flex w-full h-full justify-center items-center">
-        <p v-if="dataIsEmptyBeforeFetch(isFetched, product)">იტვირთება...</p>
-        <div v-if="dataIsEmptyAfterFetch(isFetched, product)">
-          <p>პროდუქტი არ მოიძებნა!</p>
-          <router-link :to="{name: 'products.index'}">
-            <BaseButton class="mt-4">უკან დაბრუნება</BaseButton>
-          </router-link>
-        </div>
-
-      </div>
+    <BaseCard v-if="dataIsEmptyBeforeFetch(isFetched, product)">
+      <p>იტვირთება...</p>
+    </BaseCard>
+    <BaseCard v-if="dataIsEmptyAfterFetch(isFetched, product)">
+      <p>პროდუქტი არ მოიძებნა!</p>
+      <router-link :to="{name: 'products.index'}">
+        <BaseButton class="mt-4">უკან დაბრუნება</BaseButton>
+      </router-link>
     </BaseCard>
 
 
@@ -45,21 +42,24 @@
 <script setup>
 import Layout from "@/components/layout/Layout.vue";
 import BaseCard from "@/components/layout/BaseCard.vue";
-import {computed, onMounted} from "vue";
+import {onMounted} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import useRequestState from "@/composables/useRequestState.js";
 import BaseButton from "@/components/layout/BaseButton.vue";
 import ImageWithLoader from "@/components/ImageWithLoader.vue";
 import useCartStore from "@/store/modules/cart.js";
 import useProductsStore from "@/store/modules/products.js";
+import useRef from "@/composables/hooks/useRef.js";
+import ErrorMessage from "@/components/layout/ErrorMessage.vue";
 
 const router = useRouter();
 const route = useRoute();
 const cartStore = useCartStore();
 const productsStore = useProductsStore();
 
-const product = computed(() => productsStore.product);
-const isFetched = computed(() => productsStore.isFetched);
+const [isFetched, setIsFetched] = useRef(false);
+const [product, setProduct] = useRef({});
+const [error, setError] = useRef(null);
 
 const buyProduct = () => {
   cartStore.addProductToCart(product.value);
@@ -72,6 +72,6 @@ const {
   dataIsEmptyAfterFetch,
 } = useRequestState();
 
-onMounted(() => productsStore.fetchProductById(route.params.id));
+onMounted(() => productsStore.fetchProductById(route.params.id, setIsFetched, setProduct, setError));
 
 </script>

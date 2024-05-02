@@ -1,13 +1,9 @@
 import {defineStore} from "pinia";
-import useRef from "@/composables/hooks/useRef.js";
 import axios from "@/config/axios/index.js";
 
 const useProductsStore = defineStore('products', () => {
-    const [isFetched, setIsFetched] = useRef(false);
-    const [products, setProducts] = useRef([]);
-    const [product, setProduct] = useRef([]);
 
-    const fetchProducts = () => {
+    const fetchProducts = (setIsFetched, setProducts, setError) => {
         setIsFetched(false);
         axios
             .get("products")
@@ -15,14 +11,14 @@ const useProductsStore = defineStore('products', () => {
                 setProducts(res.data);
             })
             .catch((err) => {
-                console.log(err);
+                setError(err?.message);
             })
             .finally(() => {
                 setIsFetched(true);
             });
     };
 
-    const fetchProductById = (id) => {
+    const fetchProductById = (id, setIsFetched, setProduct, setError) => {
         setIsFetched(false);
         axios
             .get(`products/${id}`)
@@ -30,7 +26,7 @@ const useProductsStore = defineStore('products', () => {
                 setProduct(res.data);
             })
             .catch((err) => {
-                console.log(err);
+                setError(err?.message);
             })
             .finally(() => {
                 setIsFetched(true);
@@ -38,9 +34,6 @@ const useProductsStore = defineStore('products', () => {
     }
 
     return {
-        product,
-        products,
-        isFetched,
         fetchProducts,
         fetchProductById,
     };

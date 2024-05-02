@@ -4,8 +4,8 @@
       <template v-for="page in totalPages" :key="page">
         <BaseButton
             ref="btnRef"
-            :class="currentPage === +page ? 'text-primary-200' : 'hover:text-primary-100' "
-            class="font-bold !px-0 !py-0 bg-transparent hover:bg-transparent text-black"
+            :class="currentPage === +page ? '!text-primary-200' : 'hover:!text-primary-100' "
+            class="font-bold !px-0 !py-0 bg-transparent hover:bg-transparent !text-black"
             @click="setCurrentPage(page)"
         >
           {{ page }}
